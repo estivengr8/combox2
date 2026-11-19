@@ -2,11 +2,11 @@
 
     //credenciales de acceso 
     //local connection 
-    $local_host     = "localhost"; //127.0.0.1
-    $local_port     = "5432";
-    $local_user     = "postgres"; 
-    $local_dbname   = "combox";
-    $local_password = "unicesmag";
+    //$local_host     = "localhost"; //127.0.0.1
+    //$local_port     = "5432";
+    //$local_user     = "postgres"; 
+    //$local_dbname   = "combox";
+    //$local_password = "unicesmag";
 
 
     //Supabase cloude connection
@@ -18,13 +18,13 @@
     
     
     //funcion de posrtgres para conectar con la base de datos 
-        $local_conn =pg_connect("
-            host=$local_host
-            port=$local_port
-            dbname=$local_dbname
-            user=$local_user
-            password=$local_password  
-        ");
+        //$local_conn =pg_connect("
+        //    host=$local_host
+        //    port=$local_port
+        //    dbname=$local_dbname
+        //    user=$local_user
+        //    password=$local_password  
+       // ");
 
         $supa_conn =pg_connect("
             host=$supa_host
@@ -34,16 +34,16 @@
             password=$supa_password  
         ");
 
-    if(!$local_conn){
-        die("Error local_connection!!!");
-    }else{
-        echo "local_connection success!!!";
-    }
+    //if(!$local_conn){
+    //    die("Error local_connection!!!");
+    //}else{
+    //    echo "local_connection success!!!";
+    //}
 
        if(!$supa_conn){
-        die("Error supa_connection!!!");
+       // die("Error supa_connection!!!");
     }else{
-        echo "supa_connection success!!!";
+       // echo "supa_connection success!!!";
     }
 
 ?>

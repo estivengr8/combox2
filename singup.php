@@ -29,14 +29,14 @@
             '$pass_enc'
         )
     ";
-    $local_res= pg_query($local_conn,$sql);
+    //$local_res= pg_query($local_conn,$sql);
     $supa_res= pg_query($supa_conn,$sql);
 
-    if ($local_res){
-        echo "<br>User has bean created succesfully into local database!!";
-    }
-    else
-        echo"<br>User hasn't been created into local database!!";
+    //if ($local_res){
+    //    echo "<br>User has bean created succesfully into local database!!";
+    //}
+    //else
+    //    echo"<br>User hasn't been created into local database!!";
 
     if ($supa_res){
         echo "<br>User has bean created succesfully into supa database!!";

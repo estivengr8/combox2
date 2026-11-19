@@ -1,10 +1,31 @@
 <?php
 session_start();
-if (!isset($_SESSION['userID'])) {
-    header('refresh: 0; url=login.html');
-}
-?>
 
+require __DIR__ . '/database.php';
+
+if (!isset($_SESSION['userID'])) {
+    header('Location: login.html');
+    exit();
+}
+
+// Obtener los datos actualizados del usuario
+$id = $_SESSION['userID'];
+
+$sql = 'SELECT firstname, lastname, photo_url FROM users WHERE id = $1';
+
+$result = pg_query_params($supa_conn, $sql, array($id));
+
+$user = pg_fetch_assoc($result);
+
+if (!$user) {
+    die("No se encontró el usuario.");
+}
+
+// Obtener fotografía
+$foto = !empty($user['photo_url'])
+    ? $user['photo_url']
+    : 'img/undraw_profile.svg';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -333,19 +354,24 @@ if (!isset($_SESSION['userID'])) {
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION['fNAME'] . " " . $_SESSION['lNAME']; ?></span>
-                                
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
-                            </a>
+                       <!-- Nav Item - User Information -->
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                        <?php echo htmlspecialchars($user['firstname'] . " " . $user['lastname']); ?>
+                                    </span>
+
+                                    <img class="img-profile rounded-circle"
+                                        src="<?php echo !empty($user['photo_url']) ? htmlspecialchars($user['photo_url']) : 'img/undraw_profile.svg'; ?>"
+                                        style="width: 40px; height: 40px; object-fit: cover;">
+
+                                </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="edit_user.php">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
